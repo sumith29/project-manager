@@ -133,20 +133,30 @@ def task_page():
 
     all_tasks = list(tasks.find())
 
-    today = datetime.today().strftime("%Y-%m-%d")
+    today = datetime.today().date()
 
     for task in all_tasks:
 
-        if task.get("due_date") and task["due_date"] < today:
-            task["overdue"] = True
-        else:
-            task["overdue"] = False
+        task["overdue"] = False
+
+        if task.get("due_date"):
+
+            due_date = datetime.strptime(
+                task["due_date"],
+                "%Y-%m-%d"
+            ).date()
+
+            if (
+                due_date < today and
+                task["status"] != "Completed"
+            ):
+
+                task["overdue"] = True
 
     return render_template(
         "tasks.html",
         tasks=all_tasks
     )
-
 
 # REST API - GET ALL USERS
 @app.route("/api/users", methods=["GET"])
