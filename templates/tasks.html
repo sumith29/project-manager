@@ -7,13 +7,24 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <style>
+        body {
+            background: #f5f7fb;
+        }
+
+        .task-card {
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 
 <body class="container mt-5">
 
-    <h1>Task Management</h1>
+    <h1 class="mb-4">Task Management</h1>
 
-    <form method="POST">
+    <form method="POST" class="mb-5">
 
         <input
             class="form-control mb-3"
@@ -28,6 +39,13 @@
             name="description"
             placeholder="Task Description"
         ></textarea>
+
+        <input
+            class="form-control mb-3"
+            type="date"
+            name="due_date"
+            required
+        >
 
         <input
             class="form-control mb-3"
@@ -62,31 +80,48 @@
 
     </form>
 
-    <hr>
+    <div class="row">
 
-    <h3>All Tasks</h3>
+        {% for task in tasks %}
 
-    {% for task in tasks %}
+        <div class="col-md-6">
 
-        <div class="card p-3 mb-3">
+            <div class="card task-card p-3 mb-4">
 
-            <h4>{{ task.title }}</h4>
+                <h4>{{ task.title }}</h4>
 
-            <p>{{ task.description }}</p>
+                <p>{{ task.description }}</p>
 
-            <p>
-                <strong>Assigned To:</strong>
-                {{ task.assigned_to }}
-            </p>
+                <p>
+                    <strong>Assigned To:</strong>
+                    {{ task.assigned_to }}
+                </p>
 
-            <p>
-                <strong>Status:</strong>
-                {{ task.status }}
-            </p>
+                <p>
+                    <strong>Status:</strong>
+                    {{ task.status }}
+                </p>
+
+                <p>
+                    <strong>Due Date:</strong>
+                    {{ task.due_date }}
+                </p>
+
+                {% if task.overdue %}
+
+                <p class="text-danger">
+                    <strong>Overdue Task</strong>
+                </p>
+
+                {% endif %}
+
+            </div>
 
         </div>
 
-    {% endfor %}
+        {% endfor %}
+
+    </div>
 
 </body>
 </html>
