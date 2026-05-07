@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tasks</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="container mt-5">
+
+    <h1>Task Management</h1>
+
+    <form method="POST">
+
+        <input
+            class="form-control mb-3"
+            type="text"
+            name="title"
+            placeholder="Task Title"
+            required
+        >
+
+        <textarea
+            class="form-control mb-3"
+            name="description"
+            placeholder="Task Description"
+        ></textarea>
+
+        <input
+            class="form-control mb-3"
+            type="text"
+            name="assigned_to"
+            placeholder="Assign To"
+            required
+        >
+
+        <select
+            class="form-control mb-3"
+            name="status"
+        >
+
+            <option value="Pending">
+                Pending
+            </option>
+
+            <option value="In Progress">
+                In Progress
+            </option>
+
+            <option value="Completed">
+                Completed
+            </option>
+
+        </select>
+
+        <button class="btn btn-success">
+            Create Task
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h3>All Tasks</h3>
+
+    {% for task in tasks %}
+
+        <div class="card p-3 mb-3">
+
+            <h4>{{ task.title }}</h4>
+
+            <p>{{ task.description }}</p>
+
+            <p>
+                <strong>Assigned To:</strong>
+                {{ task.assigned_to }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ task.status }}
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+</body>
+</html>
